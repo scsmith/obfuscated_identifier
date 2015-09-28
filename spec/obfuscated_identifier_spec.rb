@@ -17,7 +17,7 @@ describe ObfuscatedIdentifier do
   let(:example_identifier) { 'b2801d946ae53c7b' }
   let(:example_number) { 1 }
 
-  describe '#pad_number' do
+  describe '.pad_number' do
     it 'returns a string' do
       expect(klass.send(:pad_number, 1)).to be_instance_of(String)
     end
@@ -41,7 +41,7 @@ describe ObfuscatedIdentifier do
     end
   end
 
-  describe '#to_identifier' do
+  describe '.to_identifier' do
     it 'returns a string' do
       expect(klass.to_identifier(1)).to be_instance_of(String)
     end
@@ -63,7 +63,7 @@ describe ObfuscatedIdentifier do
     end
   end
 
-  describe '#from_identifier' do
+  describe '.from_identifier' do
     it 'returns a number' do
       expect(klass.from_identifier(example_identifier)).to be_instance_of(Fixnum)
     end
@@ -73,7 +73,7 @@ describe ObfuscatedIdentifier do
     end
   end
 
-  describe 'generate_identifier_pattern' do
+  describe '.generate_identifier_pattern' do
     it 'returns 0-9a-f' do
       klass.generate_identifier_pattern.each do |item|
         expect(item).to match(/[a-f 0-9]/)
@@ -88,6 +88,31 @@ describe ObfuscatedIdentifier do
     it 'generates a different pattern each time' do
       output = klass.generate_identifier_pattern
       expect(klass.generate_identifier_pattern).not_to eq(output)
+    end
+  end
+
+  describe '#to_identifier' do
+    let(:instance) { ObfuscatedIdentifierClass.new }
+    let(:id) { 25 }
+
+    before do
+      instance.should_receive(:id).and_return(id)
+    end
+
+    it 'returns the value of id obfuscated' do
+      expect(instance.to_identifier).to eq(ObfuscatedIdentifierClass.to_identifier(id))
+    end
+  end
+
+  describe '#to_param' do
+    let(:instance) { ObfuscatedIdentifierClass.new }
+
+    before do
+      instance.should_receive(:to_identifier).and_return('foo')
+    end
+
+    it 'returns the value of #to_identifier' do
+      expect(instance.to_param).to eq('foo')
     end
   end
 end

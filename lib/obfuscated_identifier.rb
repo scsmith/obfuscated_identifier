@@ -5,6 +5,10 @@ module ObfuscatedIdentifier
   extend ActiveSupport::Concern
 
   def to_param
+    to_identifier
+  end
+
+  def to_identifier
     self.class.to_identifier(id)
   end
 
