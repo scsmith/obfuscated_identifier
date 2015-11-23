@@ -1,5 +1,7 @@
 # Obfuscated Identifier
 
+[![Build Status](https://travis-ci.org/scsmith/obfuscated_identifier.svg?branch=master)](https://travis-ci.org/scsmith/obfuscated_identifier)
+
 Hide your Rails primary key without the need for token generation and additional index space.
 
 Obfuscate Identifier uses an obfuscation algorithm to generate a unique identifier for your
