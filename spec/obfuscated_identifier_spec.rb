@@ -64,12 +64,46 @@ describe ObfuscatedIdentifier do
   end
 
   describe '.from_identifier' do
-    it 'returns a number' do
-      expect(klass.from_identifier(example_identifier)).to be_instance_of(Fixnum)
+    context 'when the identifier is valid' do
+      it 'returns a number' do
+        expect(klass.from_identifier(example_identifier)).to be_instance_of(Fixnum)
+      end
+
+      it 'returns the expected integer' do
+        expect(klass.from_identifier(example_identifier)).to eq(example_number)
+      end
     end
 
-    it 'returns the expected integer' do
-      expect(klass.from_identifier(example_identifier)).to eq(example_number)
+    context 'when the identifier is nil' do
+      let(:example_identifier) { 'nil' }
+
+      it 'returns nil' do
+        expect(klass.from_identifier(example_identifier)).to be_nil
+      end
+    end
+
+    context 'when the identifier is blank' do
+      let(:example_identifier) { '' }
+
+      it 'returns nil' do
+        expect(klass.from_identifier(example_identifier)).to be_nil
+      end
+    end
+
+    context 'when the identifier is an invalid length' do
+      let(:example_identifier) { 'foo' }
+
+      it 'returns nil' do
+        expect(klass.from_identifier(example_identifier)).to be_nil
+      end
+    end
+
+    context 'when the identifier contains invalid characters' do
+      let(:example_identifier) { 'b2801d946ae53cz*' }
+
+      it 'returns nil' do
+        expect(klass.from_identifier(example_identifier)).to be_nil
+      end
     end
   end
 

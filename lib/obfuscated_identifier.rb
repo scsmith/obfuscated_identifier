@@ -31,6 +31,8 @@ module ObfuscatedIdentifier
     end
 
     def from_identifier(value)
+      return nil unless valid_identifier_pattern?(value)
+
       counts = value.each_char.map { |c| @identifier_pattern.index(c.to_s) }.reverse
 
       numbers = counts[0..-2].each_with_index.map do |count, index|
@@ -38,6 +40,14 @@ module ObfuscatedIdentifier
       end + [(counts[-1] - @identifier_offset) % @identifier_pattern.length]
 
       numbers.join('').to_i
+    end
+
+    def valid_identifier_pattern?(value)
+      return false if value.nil? || value == ''
+      return false if value.length != @identifier_length
+      return false if value.match(/[^a-f 0-9]/)
+
+      true
     end
 
     def to_identifier(value)
