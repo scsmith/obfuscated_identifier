@@ -1,8 +1,10 @@
 language: ruby
 rvm:
-  - 2.2.3
-  - 1.9.3
-  - jruby-19mode
+  - 2.2
+  - 2.5
+  - 2.6
+  - 1.9
+  - jruby
   - ruby-head
 script: bundle exec rspec
 sudo: false
